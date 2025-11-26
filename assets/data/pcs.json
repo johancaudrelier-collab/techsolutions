@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "PC-ADMIN-01",
+    "ip": "192.168.1.10",
+    "os": "Windows 10",
+    "user": "administrateur",
+    "location": "Bureau A",
+    "status": "Actif"
+  },
+  {
+    "id": 2,
+    "name": "PC-DEV-02",
+    "ip": "192.168.1.11",
+    "os": "Ubuntu 22.04",
+    "user": "dev1",
+    "location": "Bureau B",
+    "status": "Actif"
+  }
+]
