@@ -1,5 +1,5 @@
 cd C:\Users\johan\Documents\xampp\htdocs\techsolutions\bdd
-C:\Users\johan\Documents\xampp\bin\mysql dump u-root techsolutions>techsolutions.sql
+C:\Users\johan\Documents\xampp\bin\mysql dump -uroot techsolutions>techsolutions.sql
 cd C:\Users\johan\Documents\xampp\htdocs\techsolutions
 git add .
 git commit -m "sauvegarde"
