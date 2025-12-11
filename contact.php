@@ -18,21 +18,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error = 'Veuillez entrer une adresse email valide.';
   } elseif (strlen($form_data['message']) < 10) {
     $error = 'Le message doit contenir au moins 10 caractères.';
-  } else {
-    try {
-      $stmt = pdo()->prepare('INSERT INTO contacts (name, email, subject, message) VALUES (?, ?, ?, ?)');
-      $stmt->execute([
-        $form_data['name'],
-        $form_data['email'],
-        $form_data['subject'],
-        $form_data['message']
-      ]);
-      $success = 'Merci ! Votre message a été envoyé avec succès. Nous vous recontacterons très bientôt.';
-      $form_data = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
-    } catch (PDOException $e) {
-      $error = 'Une erreur est survenue lors de l\'envoi. Veuillez réessayer plus tard.';
+    } else {
+      try {
+        // Insère dans la nouvelle table `messages` (voir messages.sql)
+        $stmt = pdo()->prepare('INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)');
+        $stmt->execute([
+          $form_data['name'],
+          $form_data['email'],
+          $form_data['subject'],
+          $form_data['message']
+        ]);
+        $success = 'Merci ! Votre message a été envoyé avec succès. Nous vous recontacterons très bientôt.';
+        $form_data = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
+      } catch (PDOException $e) {
+        $error = 'Une erreur est survenue lors de l\'envoi. Veuillez réessayer plus tard.';
+      }
     }
-  }
 }
 
 require_once __DIR__ . '/includes/header.php';
@@ -73,9 +74,10 @@ require_once __DIR__ . '/includes/header.php';
 
     <div class="contact-info" style="margin-top:40px;padding:20px;background:#f0f9ff;border-radius:12px;border-left:4px solid #0ea5a4">
       <h3>Autres moyens de nous contacter</h3>
-      <p><strong>Email:</strong> contact@techsolutions.fr</p>
-      <p><strong>Téléphone:</strong> +33 (0)1 XX XX XX XX</p>
-      <p><strong>Adresse:</strong> 123 rue de l'Innovation, 75000 Paris, France</p>
+      <p><strong>Email:</strong> <?= COMPANY_EMAIL ?></p>
+      <p><strong>Téléphone:</strong> <?= COMPANY_PHONE ?></p>
+      <p><strong>Adresse:</strong> <?= COMPANY_ADDRESS ?>, <?= COMPANY_POSTAL_CODE ?> <?= COMPANY_CITY ?></p>
+      <p><strong>Contact:</strong> <?= COMPANY_DIRECTOR ?> (<?= COMPANY_DIRECTOR_TITLE ?>)</p>
       <p><strong>Horaires:</strong> Lundi-Vendredi, 9h-18h</p>
     </div>
   </div>

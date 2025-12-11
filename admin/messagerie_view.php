@@ -28,19 +28,34 @@ try {
       $error = 'Le message de réponse et l\'email de destination sont requis.';
     } else {
       // Tentative d'envoi (si mail() configuré sur ton serveur)
-      $headers = 'From: contact@techsolutions.fr' . "\r\n" . 'Reply-To: contact@techsolutions.fr' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+      $headers = 'From: ' . COMPANY_EMAIL . "\r\n" . 'Reply-To: ' . COMPANY_EMAIL . "\r\n" . 'X-Mailer: PHP/' . phpversion();
       $sent = @mail($to, $subject, $reply, $headers);
       if ($sent) {
         $success = 'Réponse envoyée avec succès.';
-        // Optionnel: marquer comme traité
-        $db->prepare('UPDATE contacts SET status = :s WHERE id = :id')->execute([':s' => 'traite', ':id' => $id]);
+        // Marquer comme traité et enregistrer la réponse en base
+        $upd = $db->prepare('UPDATE messages SET status = :s, reply_text = :rt, replied_by = :rb, replied_at = :ra WHERE id = :id');
+        $upd->execute([
+          ':s' => 'traite',
+          ':rt' => $reply,
+          ':rb' => ($_SESSION['user'] ?? 'admin'),
+          ':ra' => date('Y-m-d H:i:s'),
+          ':id' => $id
+        ]);
       } else {
-        $error = 'Impossible d\'envoyer l\'email depuis ce serveur (mail() non configuré). Vous pouvez copier le texte et répondre manuellement.';
+        // Même si mail() échoue, on peut sauvegarder la réponse en base et noter l'échec d'envoi
+        $error = 'Impossible d\'envoyer l\'email depuis ce serveur (mail() non configuré). La réponse est sauvegardée en base ; répondez manuellement.';
+        $upd = $db->prepare('UPDATE messages SET reply_text = :rt, replied_by = :rb, replied_at = :ra WHERE id = :id');
+        $upd->execute([
+          ':rt' => $reply,
+          ':rb' => ($_SESSION['user'] ?? 'admin'),
+          ':ra' => date('Y-m-d H:i:s'),
+          ':id' => $id
+        ]);
       }
     }
   }
 
-  $stmt = $db->prepare('SELECT * FROM contacts WHERE id = :id');
+  $stmt = $db->prepare('SELECT * FROM messages WHERE id = :id');
   $stmt->execute([':id' => $id]);
   $msg = $stmt->fetch(PDO::FETCH_ASSOC);
   if (!$msg) {
