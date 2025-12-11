@@ -24,77 +24,80 @@ require_once __DIR__ . '/includes/header.php';
 <section id="services" class="section services-section">
   <div class="container">
     <h2 class="section-title">Nos Services</h2>
-    <p class="section-subtitle">Solutions complètes pour tous vos besoins informatiques</p>
+    <p class="section-subtitle">Solutions informatiques complètes adaptées à vos besoins</p>
     
     <div class="services-grid">
       <!-- Service Card 1 -->
       <article class="service-card">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/>
-            <path d="M12 6v6l4 2"/>
+            <path d="M14.5 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V9.5"/>
+            <path d="M12 13V3m0 10l-4-4m8 4l4-4"/>
           </svg>
         </div>
-        <h3 class="service-title">Consulting IT</h3>
-        <p class="service-desc">Audit, stratégie et optimisation de votre infrastructure informatique pour maximiser la performance et réduire les coûts.</p>
+        <h3 class="service-title">Développement Logiciel</h3>
+        <p class="service-desc">Création et maintenance de logiciels sur mesure adaptés à vos processus métier spécifiques.</p>
       </article>
 
       <!-- Service Card 2 -->
       <article class="service-card">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-            <line x1="2" y1="20" x2="22" y2="20"/>
+            <circle cx="12" cy="12" r="1"/>
+            <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m2.08 2.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m2.08-2.08l4.24-4.24M19.78 19.78l-4.24-4.24m-2.08-2.08l-4.24-4.24"/>
           </svg>
         </div>
-        <h3 class="service-title">Support Technique</h3>
-        <p class="service-desc">Support 24/7, maintenance préventive et résolution rapide de tous vos problèmes informatiques.</p>
+        <h3 class="service-title">Gestion Infrastructure IT</h3>
+        <p class="service-desc">Mise en place et entretien des réseaux, serveurs et infrastructures informatiques performantes et sécurisées.</p>
       </article>
 
       <!-- Service Card 3 -->
       <article class="service-card">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 1v6m0 6v6M1 12h6m6 0h6"/>
-            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="1"/>
+            <path d="M19.07 4.93a10 10 0 0 0-14.14 0"/>
+            <path d="M15.58 8.42a6 6 0 0 0-8.49 8.49"/>
+            <path d="M12 2v4m0 8v4"/>
           </svg>
         </div>
-        <h3 class="service-title">Cloud & Sécurité</h3>
-        <p class="service-desc">Migration cloud sécurisée, sauvegarde des données et protection contre les cybermenaces.</p>
+        <h3 class="service-title">Design UX/UI</h3>
+        <p class="service-desc">Conception d'interfaces utilisateur attrayantes, intuitives et fonctionnelles pour vos applications.</p>
       </article>
 
       <!-- Service Card 4 -->
       <article class="service-card">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
           </svg>
         </div>
-        <h3 class="service-title">Développement Custom</h3>
-        <p class="service-desc">Applications et logiciels sur mesure adaptés à vos besoins métier spécifiques.</p>
+        <h3 class="service-title">Support Client Technique</h3>
+        <p class="service-desc">Assistance technique réactive et assistance complète pour garantir la continuité de vos services.</p>
       </article>
 
       <!-- Service Card 5 -->
       <article class="service-card">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18.364 5.636l-3.536 3.536m9.172-9.172l-3.536 3.536m0 9.172l3.536 3.536m-9.172-9.172l3.536-3.536"/>
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v4"/>
+            <circle cx="12" cy="16" r="1"/>
           </svg>
         </div>
-        <h3 class="service-title">Infrastructure</h3>
-        <p class="service-desc">Conception, mise en place et gestion de serveurs, réseaux et data centers.</p>
+        <h3 class="service-title">Cybersécurité</h3>
+        <p class="service-desc">Protection contre les menaces, gestion des accès et conformité avec les normes de sécurité informatique.</p>
       </article>
 
       <!-- Service Card 6 -->
       <article class="service-card">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm1-13h-2v6l5.25 3.15.75-1.23-3-1.92z"/>
           </svg>
         </div>
         <h3 class="service-title">Formation & Accompagnement</h3>
-        <p class="service-desc">Formation des équipes, documentation et accompagnement pour maîtriser vos nouveaux outils.</p>
+        <p class="service-desc">Formation des équipes et accompagnement pour assurer l'adoption et la maîtrise de vos nouveaux outils.</p>
       </article>
     </div>
   </div>

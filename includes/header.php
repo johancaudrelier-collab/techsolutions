@@ -26,6 +26,7 @@ if (session_status() === PHP_SESSION_NONE) {
       </div>
       <nav class="menu">
         <a href="index.php" class="nav-link">Accueil</a>
+        <a href="about.php" class="nav-link">À propos</a>
         <a href="actualites.php" class="nav-link">Actualités</a>
         <a href="parc.php" class="nav-link">Parc informatique</a>
         <a href="contact.php" class="nav-link">Contact</a>
