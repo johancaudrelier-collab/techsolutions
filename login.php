@@ -78,6 +78,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <div class="auth-footer">
       <p>Vous n'avez pas accès ? <a href="index.php">Retour à l'accueil</a></p>
+      <p style="margin-top:12px">Créer un compte ? <a href="register.php">S'enregistrer</a></p>
     </div>
   </div>
 </section>

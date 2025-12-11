@@ -36,8 +36,8 @@ if (session_status() === PHP_SESSION_NONE) {
           <a href="client/profil.php" class="nav-link">Mon compte</a>
           <a href="logout.php" class="nav-link">Déconnexion</a>
         <?php else: ?>
-          <a href="login.php" class="nav-link">Admin</a>
-          <a href="client/profil.php" class="nav-link">Espace client</a>
+          <a href="login.php" class="nav-link">Connexion</a>
+          <a href="register.php" class="nav-link">S'enregistrer</a>
         <?php endif; ?>
       </nav>
     </div>
