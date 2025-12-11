@@ -8,7 +8,7 @@ if (empty($_SESSION['client_id'])) {
 }
 
 $client_id = $_SESSION['client_id'];
-$stmt = get_pdo()->prepare('SELECT * FROM clients WHERE id = :id');
+$stmt = pdo()->prepare('SELECT * FROM clients WHERE id = :id');
 $stmt->execute([':id' => $client_id]);
 $client = $stmt->fetch();
 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error = 'Prénom et nom sont obligatoires.';
   } else {
     try {
-      $stmt = get_pdo()->prepare('UPDATE clients SET first_name = :first_name, last_name = :last_name, phone = :phone, company = :company, address = :address, city = :city, postal_code = :postal_code, country = :country WHERE id = :id');
+      $stmt = pdo()->prepare('UPDATE clients SET first_name = :first_name, last_name = :last_name, phone = :phone, company = :company, address = :address, city = :city, postal_code = :postal_code, country = :country WHERE id = :id');
       $stmt->execute([
         ':first_name' => $first_name,
         ':last_name' => $last_name,
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':id' => $client_id
       ]);
       $success = 'Profil mis à jour avec succès !';
-      $stmt = get_pdo()->prepare('SELECT * FROM clients WHERE id = :id');
+      $stmt = pdo()->prepare('SELECT * FROM clients WHERE id = :id');
       $stmt->execute([':id' => $client_id]);
       $client = $stmt->fetch();
     } catch (PDOException $e) {

@@ -3,16 +3,16 @@ require_once __DIR__ . '/../includes/db.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 // Check admin login
-if (empty($_SESSION['user'])) {
+if (empty($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
   header('Location: ../login.php');
   exit;
 }
 
 $stats = [
-  'contacts' => get_pdo()->query('SELECT COUNT(*) as count FROM contacts')->fetch()['count'],
-  'news' => get_pdo()->query('SELECT COUNT(*) as count FROM news')->fetch()['count'],
-  'clients' => get_pdo()->query('SELECT COUNT(*) as count FROM clients')->fetch()['count'],
-  'pcs' => get_pdo()->query('SELECT COUNT(*) as count FROM pcs')->fetch()['count'],
+  'contacts' => pdo()->query('SELECT COUNT(*) as count FROM contacts')->fetch()['count'],
+  'news' => pdo()->query('SELECT COUNT(*) as count FROM news')->fetch()['count'],
+  'clients' => pdo()->query('SELECT COUNT(*) as count FROM clients')->fetch()['count'],
+  'pcs' => pdo()->query('SELECT COUNT(*) as count FROM pcs')->fetch()['count'],
 ];
 
 require_once __DIR__ . '/../includes/header.php';
@@ -51,7 +51,7 @@ require_once __DIR__ . '/../includes/header.php';
 
     <h2>Derniers contacts</h2>
     <?php
-    $stmt = get_pdo()->query('SELECT * FROM contacts ORDER BY created_at DESC LIMIT 5');
+    $stmt = pdo()->query('SELECT * FROM contacts ORDER BY created_at DESC LIMIT 5');
     $recent = $stmt->fetchAll();
     ?>
     <?php if (empty($recent)): ?>

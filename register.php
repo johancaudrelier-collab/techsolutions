@@ -41,11 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       } else {
         // Créer le compte avec mot de passe haché
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = pdo()->prepare('INSERT INTO users (username, password, email) VALUES (:username, :password, :email)');
+        $stmt = pdo()->prepare('INSERT INTO users (username, password_hash, email, role) VALUES (:username, :password_hash, :email, :role)');
         $stmt->execute([
           ':username' => $username,
-          ':password' => $hashed_password,
-          ':email' => $email
+          ':password_hash' => $hashed_password,
+          ':email' => $email,
+          ':role' => 'admin'
         ]);
         $success = 'Compte créé avec succès ! Vous pouvez maintenant vous connecter.';
       }

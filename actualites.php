@@ -2,8 +2,12 @@
 require_once __DIR__ . '/includes/db.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-$stmt = get_pdo()->query('SELECT * FROM news ORDER BY published_at DESC');
-$news_list = $stmt->fetchAll();
+try {
+  $stmt = pdo()->query('SELECT id, title, content, published_at FROM news ORDER BY published_at DESC');
+  $news_list = $stmt->fetchAll();
+} catch (PDOException $e) {
+  $news_list = [];
+}
 
 require_once __DIR__ . '/includes/header.php';
 ?>

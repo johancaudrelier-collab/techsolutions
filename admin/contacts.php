@@ -2,12 +2,12 @@
 require_once __DIR__ . '/../includes/db.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-if (empty($_SESSION['user'])) {
+if (empty($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
   header('Location: ../login.php');
   exit;
 }
 
-$stmt = get_pdo()->query('SELECT * FROM contacts ORDER BY created_at DESC');
+$stmt = pdo()->query('SELECT * FROM contacts ORDER BY created_at DESC');
 $contacts = $stmt->fetchAll();
 
 require_once __DIR__ . '/../includes/header.php';

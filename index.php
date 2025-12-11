@@ -163,7 +163,7 @@ require_once __DIR__ . '/includes/header.php';
     <h2 class="section-title">Actualités</h2>
     <p class="section-subtitle">Restez informé de nos dernières infos et mises à jour</p>
     <?php
-    $stmt = get_pdo()->query('SELECT * FROM news ORDER BY published_at DESC LIMIT 3');
+    $stmt = pdo()->query('SELECT * FROM news ORDER BY published_at DESC LIMIT 3');
     $news_list = $stmt->fetchAll();
     ?>
     <?php if (empty($news_list)): ?>

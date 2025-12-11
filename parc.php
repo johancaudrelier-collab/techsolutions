@@ -1,5 +1,16 @@
 <?php
 require_once __DIR__ . '/includes/db.php';
+
+// Vérifier que l'utilisateur est connecté et est admin
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+
+if (empty($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
+  header('Location: login.php');
+  exit;
+}
+
 require_once __DIR__ . '/includes/header.php';
 
 try {

@@ -20,12 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error = 'Veuillez remplir tous les champs.';
   } else {
     try {
-      $stmt = pdo()->prepare('SELECT id, username, password FROM users WHERE username = :username LIMIT 1');
+      $stmt = pdo()->prepare('SELECT id, username, password_hash, role FROM users WHERE username = :username LIMIT 1');
       $stmt->execute([':username' => $username]);
       $user = $stmt->fetch();
       
-      if ($user && password_verify($password, $user['password'])) {
+      if ($user && password_verify($password, $user['password_hash'])) {
         $_SESSION['user'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
         header('Location: index.php');
         exit;
       }

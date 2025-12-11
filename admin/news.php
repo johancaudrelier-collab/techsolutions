@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../includes/db.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-if (empty($_SESSION['user'])) {
+if (empty($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
   header('Location: ../login.php');
   exit;
 }
@@ -13,7 +13,7 @@ $news = $stmt->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
   if ($_POST['action'] === 'add') {
-    $stmt = get_pdo()->prepare('INSERT INTO news (title, content) VALUES (:title, :content)');
+    $stmt = pdo()->prepare('INSERT INTO news (title, content) VALUES (:title, :content)');
     $stmt->execute([
       ':title' => trim($_POST['title'] ?? ''),
       ':content' => trim($_POST['content'] ?? '')
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $success = 'Actualité créée !';
     header('Refresh: 1; url=news.php');
   } elseif ($_POST['action'] === 'delete' && isset($_POST['id'])) {
-    $stmt = get_pdo()->prepare('DELETE FROM news WHERE id = :id');
+    $stmt = pdo()->prepare('DELETE FROM news WHERE id = :id');
     $stmt->execute([':id' => intval($_POST['id'])]);
     $success = 'Actualité supprimée !';
     header('Refresh: 1; url=news.php');
