@@ -5,11 +5,111 @@ body{margin:0;font-family:system-ui;background:#f6f7fb;color:#111}
 .site-header .container{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600}
 .logo{display:inline-flex;width:28px;height:28px;border-radius:8px;background:#111827;align-items:center;justify-content:center;border:1px solid #374151}
-.menu a{color:#e2e8f0;text-decoration:none;margin-left:14px}
-.menu a:hover{text-decoration:underline}
+.menu a, .nav-link{color:#e2e8f0;text-decoration:none;margin-left:14px}
+.menu a:hover, .nav-link:hover{text-decoration:underline}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:18px 0 30px}
 .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden}
 .card img{width:100%;height:160px;object-fit:cover}
 .card .p{padding:12px}
 .price{font-weight:700}
 details{margin-top:6px}
+
+/* Buttons */
+.btn{display:inline-block;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:600;border:0;cursor:pointer}
+.btn-primary{background:linear-gradient(90deg,#0ea5a4,#06b6d4);color:#fff}
+.btn-secondary{background:#111827;color:#fff}
+.btn-lg{padding:12px 20px;font-size:1.05rem}
+.btn:hover{opacity:0.9}
+
+/* Hero */
+.hero-section{display:flex;gap:24px;align-items:center;padding:48px 0}
+.hero-title{font-family:Orbitron, sans-serif;font-size:2.2rem;margin:0;color:#0f172a}
+.hero-subtitle{color:#334155;margin:12px 0}
+.hero-buttons{margin-top:12px}
+.hero-buttons a{margin-right:12px}
+.hero-background{flex:1}
+
+/* Services */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.service-card{background:#fff;border-radius:12px;padding:18px;border:1px solid #e6eef2;transition:transform 0.3s}
+.service-card:hover{transform:translateY(-2px)}
+.service-icon{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#eef2ff,#e0f2fe);display:flex;align-items:center;justify-content:center;margin-bottom:12px;color:#0ea5a4;stroke-width:2}
+.service-icon svg{width:32px;height:32px}
+.service-title{margin:0 0 6px;font-size:1.1rem;color:#0f172a}
+.service-desc{margin:0;color:#475569;line-height:1.5}
+
+/* Auth form */
+.auth{max-width:480px;margin:36px auto;padding:18px;background:#fff;border:1px solid #e6eef2;border-radius:12px}
+.auth h1{margin-top:0}
+.auth label{display:block;margin:10px 0 6px;font-weight:500}
+.auth input{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:6px}
+.alert-error{background:#fee2e2;color:#991b1b;padding:8px;border-radius:6px;margin-bottom:10px}
+.alert-success{background:#dcfce7;color:#166534;padding:8px;border-radius:6px;margin-bottom:10px}
+
+/* Contact form */
+.contact-section{padding:28px 0}
+.contact-section h1{margin-top:0}
+.contact-form{max-width:600px;margin:20px auto;background:#fff;padding:20px;border-radius:12px;border:1px solid #e6eef2}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;margin-bottom:6px;font-weight:500;color:#0f172a}
+.form-group input, .form-group textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:1rem}
+.form-group input:focus, .form-group textarea:focus{outline:none;border-color:#0ea5a4;box-shadow:0 0 0 3px rgba(14,165,164,0.1)}
+.form-group small{color:#64748b;display:block;margin-top:4px}
+.contact-info{border-radius:8px;padding:20px}
+.contact-info h3{margin:0 0 12px}
+.contact-info p{margin:8px 0;color:#334155}
+
+/* News */
+.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:20px 0}
+.news-card{background:#fff;border-radius:12px;padding:16px;border:1px solid #e6eef2}
+.news-card h3{margin:0 0 6px;font-size:1rem}
+.news-card time{color:#64748b;font-size:0.9rem}
+.news-card p{margin:8px 0 0;color:#475569;line-height:1.5}
+.news-list{margin:20px 0}
+.news-header{margin-bottom:12px}
+.news-header h2{margin:0;font-size:1.3rem}
+.news-header time{color:#64748b;font-size:0.95rem}
+
+/* Gestion parc */
+.gestion-parc{padding:20px 0}
+.pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:20px 0}
+.pc-card{background:#fff;border:1px solid #e6eef2;border-radius:12px;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s}
+.pc-card:hover{transform:translateY(-4px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.pc-image{width:100%;height:200px;overflow:hidden;background:#f9fafb}
+.pc-image img{width:100%;height:100%;object-fit:cover}
+.pc-content{padding:16px}
+.pc-card h2{margin:0 0 8px;font-size:1.1rem;color:#0f172a}
+.pc-price{font-weight:700;color:#0ea5a4;font-size:1.2rem;margin:0 0 12px}
+.pc-specs summary{cursor:pointer;color:#0ea5a4;font-weight:500;user-select:none;padding:8px 0}
+.pc-specs summary:hover{text-decoration:underline}
+.pc-specs pre{background:#f9fafb;padding:10px;border-radius:6px;margin:8px 0 0;font-size:0.85rem;color:#374151;white-space:pre-wrap}
+
+/* Footer */
+.site-footer{background:#0b1220;color:#cbd5e1;padding:18px 0;margin-top:28px;border-top:1px solid #122032}
+
+/* Admin interface */
+.admin-header{background:#f0f9ff;padding:16px;border-radius:8px;margin-bottom:20px}
+.admin-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden}
+.admin-table thead{background:#0f172a;color:#fff}
+.admin-table th, .admin-table td{padding:10px;text-align:left;border-bottom:1px solid #e6eef2}
+.admin-table tbody tr:hover{background:#f9fafb}
+.admin-actions{display:flex;gap:8px}
+.btn-sm{padding:4px 8px;font-size:0.85rem}
+
+/* Admin section */
+.admin-section{padding:20px 0}
+.admin-header{background:#f0f9ff;padding:16px;border-radius:8px;margin-bottom:20px}
+.admin-header h1{margin-top:0}
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:20px 0}
+.stat-card{background:#fff;border:1px solid #e6eef2;border-radius:8px;padding:16px;text-align:center}
+.stat-number{font-size:2rem;font-weight:700;color:#0ea5a4;margin:8px 0}
+
+/* Client section */
+.client-section{padding:20px 0}
+.client-section h2{margin-top:20px;font-size:1.3rem}
+
+/* Sections */
+.section{padding:36px 0}
+.section-title{font-size:1.8rem;margin:0 0 6px;color:#0f172a}
+.section-subtitle{color:#64748b;margin:0}
+.subtitle{color:#64748b;margin:8px 0}

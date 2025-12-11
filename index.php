@@ -157,6 +157,32 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
+<!-- News Section -->
+<section class="section news-section">
+  <div class="container">
+    <h2 class="section-title">Actualités</h2>
+    <p class="section-subtitle">Restez informé de nos dernières infos et mises à jour</p>
+    <?php
+    $stmt = get_pdo()->query('SELECT * FROM news ORDER BY published_at DESC LIMIT 3');
+    $news_list = $stmt->fetchAll();
+    ?>
+    <?php if (empty($news_list)): ?>
+      <p>Aucune actualité pour le moment.</p>
+    <?php else: ?>
+      <div class="news-grid">
+        <?php foreach ($news_list as $article): ?>
+          <article class="news-card">
+            <h3><?= htmlspecialchars($article['title']) ?></h3>
+            <time><?= date('d/m/Y', strtotime($article['published_at'])) ?></time>
+            <p><?= htmlspecialchars(substr($article['content'], 0, 120)) ?>...</p>
+          </article>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+    <a href="actualites.php" class="btn btn-secondary">Voir toutes les actualités</a>
+  </div>
+</section>
+
 <!-- CTA Section -->
 <section id="contact" class="cta-section">
   <div class="container">

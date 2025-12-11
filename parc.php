@@ -2,34 +2,46 @@
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/header.php';
 
-$pcs = pdo()->query('SELECT id, name, image_url, price FROM pcs ORDER BY id')->fetchAll();
+try {
+  $pcs = pdo()->query('SELECT id, name, description, image_url, price FROM pcs ORDER BY id')->fetchAll();
+} catch (PDOException $e) {
+  $pcs = [];
+}
 ?>
-<h1>Nos PC</h1>
-<section class="grid">
-<?php foreach ($pcs as $pc): ?>
-  <article class="card">
-    <img src="<?= e($pc['image_url']) ?>" alt="Photo de <?= e($pc['name']) ?>">
-    <div class="p">
-      <h3><?= e($pc['name']) ?></h3>
-      <p class="price"><?= number_format((float)$pc['price'], 2, ',', ' ') . ' ' . CURRENCY ?></p>
-      <details>
-        <summary>Voir les composants</summary>
-        <ul>
-          <?php
-            $stmt = pdo()->prepare('
-              SELECT c.name
-              FROM pc_components pc
-              JOIN components c ON c.id = pc.component_id
-              WHERE pc.pc_id = ?
-            ');
-            $stmt->execute([(int)$pc['id']]);
-            foreach ($stmt->fetchAll() as $row): ?>
-              <li><?= e($row['name']) ?></li>
-          <?php endforeach; ?>
-        </ul>
-      </details>
-    </div>
-  </article>
-<?php endforeach; ?>
+
+<section class="parc-section">
+  <div class="container">
+    <h1>Parc informatique</h1>
+    <p class="subtitle">Découvrez nos postes de travail et leurs configurations</p>
+
+    <?php if (empty($pcs)): ?>
+      <p>Aucun poste disponible pour le moment.</p>
+    <?php else: ?>
+      <div class="pc-grid">
+        <?php foreach ($pcs as $pc): ?>
+          <article class="pc-card">
+            <?php if (!empty($pc['image_url'])): ?>
+              <div class="pc-image">
+                <img src="<?= htmlspecialchars($pc['image_url']) ?>" alt="Photo de <?= htmlspecialchars($pc['name']) ?>">
+              </div>
+            <?php endif; ?>
+            <div class="pc-content">
+              <h2><?= htmlspecialchars($pc['name']) ?></h2>
+              <?php if (!empty($pc['price'])): ?>
+                <p class="pc-price"><?= number_format((float)$pc['price'], 2, ',', ' ') . ' ' . CURRENCY ?></p>
+              <?php endif; ?>
+              <?php if (!empty($pc['description'])): ?>
+                <details class="pc-specs">
+                  <summary>Voir les spécifications</summary>
+                  <pre><?= htmlspecialchars($pc['description']) ?></pre>
+                </details>
+              <?php endif; ?>
+            </div>
+          </article>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+  </div>
 </section>
+
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

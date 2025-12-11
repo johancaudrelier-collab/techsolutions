@@ -1,14 +1,84 @@
-<?php require_once __DIR__ . '/includes/header.php';
-$sent=false;$name=$_POST['name']??'';$email=$_POST['email']??'';$message=$_POST['message']??'';
-if($_SERVER['REQUEST_METHOD']==='POST' && $name!=='' && $email!=='' && $message!==''){ $sent=true; }
-function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
+<?php
+require_once __DIR__ . '/includes/db.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+$success = '';
+$error = '';
+$form_data = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $form_data['name'] = trim($_POST['name'] ?? '');
+  $form_data['email'] = trim($_POST['email'] ?? '');
+  $form_data['subject'] = trim($_POST['subject'] ?? '');
+  $form_data['message'] = trim($_POST['message'] ?? '');
+
+  if ($form_data['name'] === '' || $form_data['email'] === '' || $form_data['subject'] === '' || $form_data['message'] === '') {
+    $error = 'Tous les champs sont obligatoires.';
+  } elseif (!filter_var($form_data['email'], FILTER_VALIDATE_EMAIL)) {
+    $error = 'Veuillez entrer une adresse email valide.';
+  } elseif (strlen($form_data['message']) < 10) {
+    $error = 'Le message doit contenir au moins 10 caractères.';
+  } else {
+    try {
+      $stmt = pdo()->prepare('INSERT INTO contacts (name, email, subject, message) VALUES (?, ?, ?, ?)');
+      $stmt->execute([
+        $form_data['name'],
+        $form_data['email'],
+        $form_data['subject'],
+        $form_data['message']
+      ]);
+      $success = 'Merci ! Votre message a été envoyé avec succès. Nous vous recontacterons très bientôt.';
+      $form_data = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
+    } catch (PDOException $e) {
+      $error = 'Une erreur est survenue lors de l\'envoi. Veuillez réessayer plus tard.';
+    }
+  }
+}
+
+require_once __DIR__ . '/includes/header.php';
 ?>
-<h1>Contact</h1>
-<?php if($sent): ?><p class="card">Merci <?= e($name) ?> ! (envoi factice)</p><?php endif; ?>
-<form method="post" class="card" style="padding:12px">
-  <p><label>Nom<br><input name="name" required value="<?= e($name) ?>"></label></p>
-  <p><label>Email<br><input type="email" name="email" required value="<?= e($email) ?>"></label></p>
-  <p><label>Message<br><textarea name="message" rows="4" required><?= e($message) ?></textarea></label></p>
-  <button>Envoyer</button>
-</form>
+
+<section class="contact-section">
+  <div class="container">
+    <h1>Nous contacter</h1>
+    <p class="subtitle">Vous avez une question ? Envoyez-nous un message, notre équipe vous répondra dans les 24h.</p>
+
+    <?php if ($success): ?>
+      <div class="alert alert-success">✓ <?= htmlspecialchars($success) ?></div>
+    <?php endif; ?>
+    <?php if ($error): ?>
+      <div class="alert alert-error">✗ <?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
+
+    <form method="post" action="contact.php" class="contact-form">
+      <div class="form-group">
+        <label for="name">Nom complet *</label>
+        <input type="text" id="name" name="name" value="<?= htmlspecialchars($form_data['name']) ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Adresse email *</label>
+        <input type="email" id="email" name="email" value="<?= htmlspecialchars($form_data['email']) ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="subject">Sujet *</label>
+        <input type="text" id="subject" name="subject" value="<?= htmlspecialchars($form_data['subject']) ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message *</label>
+        <textarea id="message" name="message" rows="6" required><?= htmlspecialchars($form_data['message']) ?></textarea>
+        <small>Minimum 10 caractères</small>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg">Envoyer le message</button>
+    </form>
+
+    <div class="contact-info" style="margin-top:40px;padding:20px;background:#f0f9ff;border-radius:12px;border-left:4px solid #0ea5a4">
+      <h3>Autres moyens de nous contacter</h3>
+      <p><strong>Email:</strong> contact@techsolutions.fr</p>
+      <p><strong>Téléphone:</strong> +33 (0)1 XX XX XX XX</p>
+      <p><strong>Adresse:</strong> 123 rue de l'Innovation, 75000 Paris, France</p>
+      <p><strong>Horaires:</strong> Lundi-Vendredi, 9h-18h</p>
+    </div>
+  </div>
+</section>
+
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
