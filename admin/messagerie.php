@@ -18,19 +18,19 @@ try {
     if (!empty($_POST['action']) && $_POST['action'] === 'toggle_status') {
       $id = intval($_POST['id'] ?? 0);
       $new = ($_POST['new_status'] ?? 'nouveau');
-      $stmt = $db->prepare('UPDATE contacts SET status = :status WHERE id = :id');
+      $stmt = $db->prepare('UPDATE messages SET status = :status WHERE id = :id');
       $stmt->execute([':status' => $new, ':id' => $id]);
       $success = 'Statut mis à jour.';
     }
     if (!empty($_POST['action']) && $_POST['action'] === 'delete') {
       $id = intval($_POST['id'] ?? 0);
-      $stmt = $db->prepare('DELETE FROM contacts WHERE id = :id');
+      $stmt = $db->prepare('DELETE FROM messages WHERE id = :id');
       $stmt->execute([':id' => $id]);
       $success = 'Message supprimé.';
     }
   }
 
-  $stmt = $db->query("SELECT id, name, email, subject, status, created_at FROM contacts ORDER BY created_at DESC");
+  $stmt = $db->query("SELECT id, name, email, subject, status, created_at FROM messages ORDER BY created_at DESC");
   $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {

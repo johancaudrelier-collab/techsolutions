@@ -1,12 +1,13 @@
 <?php
 require_once __DIR__ . '/includes/db.php';
 
-// Vérifier que l'utilisateur est connecté et est admin
+// Démarrer la session si nécessaire pour afficher les contrôles réservés aux admins
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
-if (empty($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
+// Restreindre l'accès: seuls les admins peuvent voir cette page
+if (empty($_SESSION['user']) || ($_SESSION['role'] ?? '') !== 'admin') {
   header('Location: login.php');
   exit;
 }
@@ -14,9 +15,20 @@ if (empty($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
 require_once __DIR__ . '/includes/header.php';
 
 try {
-  $pcs = pdo()->query('SELECT id, name, description, image_url, price FROM pcs ORDER BY id')->fetchAll();
+  // Récupérer les postes (la table pcs dans ta BDD n'a pas de colonne 'description')
+  $pcs = pdo()->query('SELECT id, name, image_url, price FROM pcs ORDER BY id')->fetchAll(PDO::FETCH_ASSOC);
+
+  // Récupérer les composants attachés à chaque PC
+  $compRows = pdo()->query('SELECT pc_components.pc_id as pc_id, components.id as id, components.name as name, components.description as description FROM pc_components JOIN components ON pc_components.component_id = components.id ORDER BY pc_components.pc_id')->fetchAll(PDO::FETCH_ASSOC);
+  $pc_components = [];
+  foreach ($compRows as $r) {
+    $pc_components[$r['pc_id']][] = $r;
+  }
+
 } catch (PDOException $e) {
   $pcs = [];
+  $pc_components = [];
+  error_log('Parc query error: ' . $e->getMessage());
 }
 ?>
 
@@ -41,10 +53,16 @@ try {
               <?php if (!empty($pc['price'])): ?>
                 <p class="pc-price"><?= number_format((float)$pc['price'], 2, ',', ' ') . ' ' . CURRENCY ?></p>
               <?php endif; ?>
-              <?php if (!empty($pc['description'])): ?>
+              <?php
+                $components = $pc_components[$pc['id']] ?? [];
+                if (!empty($components)): ?>
                 <details class="pc-specs">
                   <summary>Voir les spécifications</summary>
-                  <pre><?= htmlspecialchars($pc['description']) ?></pre>
+                  <ul>
+                    <?php foreach ($components as $comp): ?>
+                      <li><strong><?= htmlspecialchars($comp['name']) ?></strong><?php if (!empty($comp['description'])): ?> — <?= htmlspecialchars(trim($comp['description'])) ?><?php endif; ?></li>
+                    <?php endforeach; ?>
+                  </ul>
                 </details>
               <?php endif; ?>
             </div>

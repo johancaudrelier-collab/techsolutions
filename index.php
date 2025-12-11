@@ -163,8 +163,14 @@ require_once __DIR__ . '/includes/header.php';
     <h2 class="section-title">Actualités</h2>
     <p class="section-subtitle">Restez informé de nos dernières infos et mises à jour</p>
     <?php
-    $stmt = pdo()->query('SELECT * FROM news ORDER BY published_at DESC LIMIT 3');
-    $news_list = $stmt->fetchAll();
+    try {
+      $stmt = pdo()->query('SELECT * FROM news ORDER BY published_at DESC LIMIT 3');
+      $news_list = $stmt->fetchAll();
+    } catch (PDOException $e) {
+      // Si la table 'news' n'existe pas ou autre erreur DB, on évite une erreur fatale
+      $news_list = [];
+      error_log('News query error: ' . $e->getMessage());
+    }
     ?>
     <?php if (empty($news_list)): ?>
       <p>Aucune actualité pour le moment.</p>
